@@ -1,0 +1,70 @@
+C:\Users\m3gupta\Documents\Project\env\Scripts\python.exe "C:\Program Files\JetBrains\PyCharm Community Edition 2021.2.2\plugins\python-ce\helpers\pycharm\_jb_pytest_runner.py" --target test_RestTerminalLibrary.py::TestRestTerminal.test_send_rcs_chat_without_offline
+Testing started at 21:04 ...
+Launching pytest with arguments test_RestTerminalLibrary.py::TestRestTerminal::test_send_rcs_chat_without_offline --no-header --no-summary -q in C:\Users\m3gupta\Documents\Project\e2e-taf-robot\taf_core\modules\terminal_controller\test
+
+============================= test session starts =============================
+collecting ... collected 1 item
+
+test_RestTerminalLibrary.py::TestRestTerminal::test_send_rcs_chat_without_offline FAILED [100%]
+test_RestTerminalLibrary.py:592 (TestRestTerminal.test_send_rcs_chat_without_offline)
+self = <taf_core.modules.terminal_controller.test.test_RestTerminalLibrary.TestRestTerminal object at 0x00000200FB62B248>
+process_log_for_rest = <MagicMock name='process_log_for_rest' id='2203240807688'>
+send_rest_call_action_command = <MagicMock name='send_rest_call_action_command' id='2203240807880'>
+get_variable_value = <MagicMock name='get_variable_value' id='2203240899784'>
+
+    @patch("robot.libraries.BuiltIn.BuiltIn.get_variable_value", return_value=False)
+    @patch("modules.RestTerminal.send_rest_call_action_command",
+           return_value=MagicMock(spec=RestResponse, data={'status': 'success', 'output': 'success'}))
+    @patch("modules.RestTerminal.process_log_for_rest")
+    def test_send_rcs_chat_without_offline(self, process_log_for_rest, send_rest_call_action_command,
+                                           get_variable_value):
+        self.rest_terminal_library.send_rcs_chat(self.mock_calling_subscriber, self.mock_called_subscriber, " ", " ", 10)
+        get_variable_value.assert_called_with("${OFFLINE_LOG_VALIDATION}")
+        ntaf_data = {"input_data": {"called_subs": self.mock_called_subscriber}, "calling_app": "",
+                     "GroupName": "", "ChatMessage": "",
+                     "Timeout": 10}
+>       send_rest_call_action_command.assert_called_with(self.mock_calling_subscriber, 'send_rcs_chat', ntaf_data)
+
+test_RestTerminalLibrary.py:604: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_mock_self = <MagicMock name='send_rest_call_action_command' id='2203240807880'>
+args = (<kernel.prototypes.rest_subscriber.RestSubscriber object at 0x00000200FB62BBC8>, 'send_rcs_chat', {'ChatMessage': '', 'GroupName': '', 'Timeout': 10, 'calling_app': '', ...})
+kwargs = {}
+expected = ((<kernel.prototypes.rest_subscriber.RestSubscriber object at 0x00000200FB62BBC8>, 'send_rcs_chat', {'ChatMessage': '', 'GroupName': '', 'Timeout': 10, 'calling_app': '', ...}), {})
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x00000200FB6D69D8>
+actual = call(<kernel.prototypes.rest_subscriber.RestSubscriber object at 0x00000200FB62BBC8>, 'send_rcs_chat', {'input_data': ...RestSubscriber object at 0x00000200FB62B988>}, 'calling_app': ' ', 'GroupName': '', 'ChatMessage': ' ', 'Timeout': 10})
+cause = None
+
+    def assert_called_with(_mock_self, *args, **kwargs):
+        """assert that the mock was called with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        self = _mock_self
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            raise AssertionError('Expected call: %s\nNot called' % (expected,))
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher((args, kwargs))
+        actual = self._call_matcher(self.call_args)
+        if expected != actual:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: Expected call: send_rest_call_action_command(<kernel.prototypes.rest_subscriber.RestSubscriber object at 0x00000200FB62BBC8>, 'send_rcs_chat', {'input_data': {'called_subs': <kernel.prototypes.rest_subscriber.RestSubscriber object at 0x00000200FB62B988>}, 'calling_app': '', 'GroupName': '', 'ChatMessage': '', 'Timeout': 10})
+E           Actual call: send_rest_call_action_command(<kernel.prototypes.rest_subscriber.RestSubscriber object at 0x00000200FB62BBC8>, 'send_rcs_chat', {'input_data': {'called_subs': <kernel.prototypes.rest_subscriber.RestSubscriber object at 0x00000200FB62B988>}, 'calling_app': ' ', 'GroupName': '', 'ChatMessage': ' ', 'Timeout': 10})
+
+C:\Program Files\Python37\lib\unittest\mock.py:873: AssertionError
+
+
+
+
+======================== 1 failed, 4 warnings in 9.95s ========================
+
+Process finished with exit code 1
+
+
+
